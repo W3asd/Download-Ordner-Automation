@@ -4,10 +4,16 @@ from os.path import isfile, join
 import os
 import shutil
 
-# Ordner welcher sotiert werden soll
+# Funktion welche die Extension aus von einer Datei filtert
+def getExtension(file):
+    name, extension = os.path.splitext(file)
+    extension = extension.lstrip(".")
+    return extension
+
+# Ordner der sotiert werden soll
 file_path = "D:/Downloads"
 
-# Liste der Datein im Ordner
+# Datein welche im Ordner sind
 """
 List Comprehension
 Die soll den Array von der listdir() Funktion mit hilfe der isfile() Funktion nach Datein filtern
@@ -26,41 +32,35 @@ extension_dict = {}
 # Loop um die Verzeichnisse der spez Extension zu erstellen
 for file in files:
 
-    name, extension = os.path.splitext(file)                         # splitext() soll den Namen der und dessen Extension voneinander trennen
-    extension = extension.lstrip(".")                                # lstrip() soll den Punkt vor der Extension entfernen
+    extension = getExtension(file)                                      # Nutze definierte Funktion getExtension() um die Extension der Datei zu erhalten
 
     if extension not in extension_list:
 
-        extension_list.append(extension)                              # sollte die Extension nicht in der Liste sein, soll die in die extension_list hinzugefügt werden 
+        extension_list.append(extension)                                # sollte die Extension nicht in der Liste sein, soll die in die extension_list hinzugefügt werden 
 
 
-        new_folder_name = file_path + "/" + extension + "_folder"     # Name des neuen Verzeichnisses wird generiert
+        new_folder_name = file_path + "/" + extension + "_folder"       # Name des neuen Verzeichnisses wird generiert
 
 
-        extension_dict[str(extension)] = str(new_folder_name)         # Extension und dessen neuer Pfad wird ins dict hinzugefügt
+        extension_dict[str(extension)] = str(new_folder_name)           # Extension und dessen neuer Pfad wird ins dict hinzugefügt
 
 
-        if os.path.isdir(new_folder_name) == True:                    # Exestiert das Verzeichnis schon im Download Ordner?
+        if os.path.isdir(new_folder_name) == True:                      # Exestiert das Verzeichnis schon im Download Ordner?
 
             continue
 
         else:
-            os.mkdir(new_folder_name)                                 # neues Verzeichnis wird erstellt 
+            os.mkdir(new_folder_name)                                   # neues Verzeichnis wird erstellt 
 
 # Schleife um die Datein in passende Verzeichnis zu bewegen
 for file in files:
         
-    src_path = file_path + "/" + file                                # Erzeugung des Source Path 
-    
-    name, extension = os.path.splitext(file)                         # splitext() soll den Namen der und dessen Extension voneinander trennen
-    extension = extension.lstrip(".")                                # lstrip() soll den Punkt vor der Extension entfernen
+    src_path = file_path + "/" + file                                   # Erzeugung des Source Path 
 
+    extension = getExtension(file)
 
-    if extension in extension_dict.keys():                          # Im Dict wird nachgeschaut wohin die Datei bewegt werden soll
+    if extension in extension_dict.keys():                              # Im Dict wird nachgeschaut wohin die Datei bewegt werden soll
         
-        dest_path = extension_dict[str(extension)]                  # Erzeugung des Destination Path
+        dest_path = extension_dict[str(extension)]                      # Erzeugung des Destination Path
 
-        shutil.move(src_path, dest_path)                            # Datei wird ins passende Verzeichnis bewegt
-
-     
-
+        shutil.move(src_path, dest_path)                                # Datei wird ins passende Verzeichnis bewegt
