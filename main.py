@@ -63,4 +63,8 @@ for file in files:
         
         dest_path = extension_dict[str(extension)]                      # Erzeugung des Destination Path
 
-        shutil.move(src_path, dest_path)                                # Datei wird ins passende Verzeichnis bewegt
+        try:                                                            # Error Handling: Sollte die gleiche Datei sich schon im Ordner befinden soll das Script es einfach überspringen
+            shutil.move(src_path, dest_path)                            # Datei wird ins passende Verzeichnis bewegt
+        except:
+            print(file + " ist schon im Ordner " + dest_path)
+            continue
