@@ -52,7 +52,7 @@ for file in files:
         else:
             os.mkdir(new_folder_name)                                   # neues Verzeichnis wird erstellt 
 
-# Schleife um die Datein in passende Verzeichnis zu bewegen
+# Schleife um die Datein in das passende Verzeichnis zu bewegen
 for file in files:
         
     src_path = file_path + "/" + file                                   # Erzeugung des Source Path 
