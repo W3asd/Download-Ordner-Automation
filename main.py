@@ -1,4 +1,4 @@
-# Import the libraries
+# Libaries die benötigt werden
 from os import listdir
 from os.path import isfile, join
 import os
@@ -26,7 +26,8 @@ extension_dict = {}
 # Loop um die Verzeichnisse der spez Extension zu erstellen
 for file in files:
 
-    extension = file.split(".")[1]                                   # Extension mithilfe der Splitfunktion erhalten
+    name, extension = os.path.splitext(file)                         # splitext() soll den Namen der und dessen Extension voneinander trennen
+    extension = extension.lstrip(".")                                # lstrip() soll den Punkt vor der Extension entfernen
 
     if extension not in extension_list:
 
@@ -50,8 +51,11 @@ for file in files:
 for file in files:
         
     src_path = file_path + "/" + file                                # Erzeugung des Source Path 
-    extension = file.split(".")[1]
-        
+    
+    name, extension = os.path.splitext(file)                         # splitext() soll den Namen der und dessen Extension voneinander trennen
+    extension = extension.lstrip(".")                                # lstrip() soll den Punkt vor der Extension entfernen
+
+
     if extension in extension_dict.keys():                          # Im Dict wird nachgeschaut wohin die Datei bewegt werden soll
         
         dest_path = extension_dict[str(extension)]                  # Erzeugung des Destination Path
