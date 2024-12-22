@@ -6,7 +6,7 @@ import shutil
 
 # Funktion welche die Extension aus von einer Datei filtert
 def getExtension(file):
-    name, extension = os.path.splitext(file)
+    extension = os.path.splitext(file)[1]
     extension = extension.lstrip(".")
     return extension
 
